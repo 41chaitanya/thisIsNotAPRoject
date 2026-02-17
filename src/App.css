@@ -191,10 +191,46 @@ body::after {
   }
 }
 
+/* Reload Button */
+.reload-btn {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.2rem;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.reload-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.reload-btn:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
 /* Instructions */
 .instructions {
   position: absolute;
-  bottom: 30px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -301,11 +337,17 @@ body::after {
 
   .instructions {
     z-index: 1000;
-    bottom: 80px;
+    bottom: 120px;
   }
 
   .instructions p {
     font-size: 1.3rem;
+  }
+
+  .reload-btn {
+    font-size: 1rem;
+    padding: 8px 20px;
+    top: 15px;
   }
 }
 

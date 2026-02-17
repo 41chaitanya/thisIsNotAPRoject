@@ -73,6 +73,42 @@ const SorryWebsite = () => {
         setDestroyedCount(0);
     }, [currentStage]);
 
+    // Reload text function
+    const reloadText = () => {
+        const elements = [];
+        let letterCount = 0;
+
+        currentMessageLines.forEach((line, lineIndex) => {
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char.trim() !== '') {
+                    elements.push({
+                        char,
+                        lineIndex,
+                        charIndex: i,
+                        destroyed: false,
+                        tx: (Math.random() - 0.5) * 200,
+                        ty: Math.random() * 500 + 200,
+                        rot: (Math.random() - 0.5) * 720
+                    });
+                    letterCount++;
+                } else {
+                    elements.push({
+                        char: '\u00a0',
+                        lineIndex,
+                        charIndex: i,
+                        destroyed: false,
+                        isSpace: true
+                    });
+                }
+            }
+        });
+
+        setTextElements(elements);
+        totalLettersRef.current = letterCount;
+        setDestroyedCount(0);
+    };
+
     // Mouse move handler - check for letter destruction
     const handleMouseMove = (e) => {
         cursorRef.current.x = e.clientX;
@@ -188,6 +224,13 @@ const SorryWebsite = () => {
 
     return (
         <div className="sorry-container">
+            {/* Reload Button */}
+            {!showSorry && (
+                <button className="reload-btn" onClick={reloadText}>
+                    ↻ Reload Text
+                </button>
+            )}
+
             {/* Text container */}
             <div
                 className={`text-container ${showSorry ? 'hidden' : ''}`}
