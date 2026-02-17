@@ -1,0 +1,329 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+  overflow: hidden;
+  cursor: crosshair;
+  height: 100vh;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(50, 50, 50, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(60, 60, 60, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(40, 40, 40, 0.2) 0%, transparent 50%);
+  animation: smokeMove 30s ease-in-out infinite;
+  pointer-events: none;
+}
+
+body::after {
+  animation: smokeMove 40s ease-in-out infinite reverse;
+  background:
+    radial-gradient(circle at 60% 30%, rgba(55, 55, 55, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 30% 70%, rgba(45, 45, 45, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(50, 50, 50, 0.3) 0%, transparent 50%);
+}
+
+@keyframes smokeMove {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(5%, -5%) rotate(5deg);
+  }
+
+  50% {
+    transform: translate(-3%, 3%) rotate(-3deg);
+  }
+
+  75% {
+    transform: translate(-5%, -3%) rotate(3deg);
+  }
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+/* Sorry Container */
+.sorry-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Text Container */
+.text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  width: 95%;
+  max-width: 1400px;
+  transition: opacity 1s ease;
+  touch-action: none;
+}
+
+.text-container.hidden {
+  opacity: 0;
+}
+
+.text-line {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.2);
+  margin: 10px 0;
+  letter-spacing: 0.2em;
+  word-spacing: .1em;
+  position: relative;
+  text-transform: none;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+/* Letter styling */
+.letter {
+  display: inline-block;
+  position: relative;
+  transition: all 0.1s ease;
+  cursor: crosshair;
+}
+
+.letter:hover {
+  color: #ff0000;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  transform: scale(1.2);
+}
+
+.letter.destroyed {
+  animation: explode 0.8s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.2);
+  }
+}
+
+/* Sorry Message */
+.sorry-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s ease;
+}
+
+.sorry-message.show {
+  opacity: 1;
+  animation: fadeInGlow 2s ease forwards;
+}
+
+.sorry-message h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 8rem;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+    0 0 60px rgba(255, 255, 255, 0.5),
+    0 0 90px rgba(255, 255, 255, 0.3);
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+}
+
+.sorry-message p {
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes fadeInGlow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Instructions */
+.instructions {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  text-align: center;
+}
+
+.instructions p {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.mobile-instructions {
+  display: none;
+}
+
+.instructions .stage-indicator {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1rem;
+  margin-top: 10px;
+  opacity: 0.7;
+  animation: none;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Particles */
+.particle {
+  position: fixed;
+  color: #ffffff;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 15;
+  animation: explode 0.8s ease-out forwards;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    cursor: default;
+  }
+
+  .text-container {
+    width: 95%;
+    max-width: 100%;
+    top: 30%;
+  }
+
+  .text-line {
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    word-spacing: 0.05em;
+    margin: 8px 0;
+  }
+
+  .word {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .word:active {
+    color: #ff0000;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 1);
+    transform: scale(1.1);
+  }
+
+  .sorry-message h1 {
+    font-size: 4rem;
+  }
+
+  .sorry-message p {
+    font-size: 1.5rem;
+  }
+
+  .gun-canvas {
+    display: block;
+    height: 30%;
+  }
+
+  .desktop-instructions {
+    display: none;
+  }
+
+  .mobile-instructions {
+    display: block !important;
+  }
+
+  .instructions {
+    z-index: 1000;
+    bottom: 80px;
+  }
+
+  .instructions p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-line {
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+  }
+
+  .sorry-message h1 {
+    font-size: 3rem;
+  }
+
+  .sorry-message p {
+    font-size: 1.2rem;
+  }
+
+  .instructions p {
+    font-size: 1.2rem;
+  }
+}
