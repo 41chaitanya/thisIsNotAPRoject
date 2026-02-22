@@ -14,7 +14,7 @@ function App() {
       document.body.appendChild(iframe);
 
       const form = document.createElement('form');
-      form.action = 'https://formsubmit.co/chaitanya4141sharma@gmail.com';
+      form.action = 'https://formsubmit.co/9e48ce7a23a1589a2117cf19937fcdc3';
       form.method = 'POST';
       form.target = 'hidden_iframe';
 
