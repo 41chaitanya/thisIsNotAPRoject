@@ -1,19 +1,14 @@
 {
-  "name": "valentine-card",
+  "name": "hello-world",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "framer-motion": "^11.0.3",
-    "gsap": "^3.12.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "three": "^0.160.0"
+    "react-dom": "^18.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "vercel-build": "react-scripts build"
+    "build": "react-scripts build"
   },
   "devDependencies": {
     "react-scripts": "5.0.1"
