@@ -4,13 +4,46 @@ import './App.css';
 function App() {
   const [step, setStep] = useState(0);
   const audioRef = useRef(null);
-  const formRef = useRef(null);
 
-  const sendEmail = (buttonText) => {
-    if (formRef.current) {
-      const messageInput = formRef.current.querySelector('input[name="message"]');
-      messageInput.value = `Button clicked: ${buttonText}`;
-      formRef.current.submit();
+  const sendEmail = async (buttonText) => {
+    try {
+      // Create a hidden iframe to submit the form without redirecting
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'hidden_iframe';
+      document.body.appendChild(iframe);
+
+      const form = document.createElement('form');
+      form.action = 'https://formsubmit.co/chaitanya4141sharma@gmail.com';
+      form.method = 'POST';
+      form.target = 'hidden_iframe';
+
+      const fields = {
+        '_subject': 'Response from Sakhi',
+        '_captcha': 'false',
+        '_template': 'table',
+        'message': `Button clicked: ${buttonText}`,
+        'timestamp': new Date().toLocaleString()
+      };
+
+      Object.keys(fields).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+      
+      // Clean up after a short delay
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 1000);
+    } catch (error) {
+      console.error('Email send failed:', error);
     }
   };
 
@@ -150,18 +183,6 @@ function App() {
 
   return (
     <div className="container">
-      <form 
-        ref={formRef}
-        action="https://formsubmit.co/chaitanya4141sharma@gmail.com" 
-        method="POST"
-        style={{ display: 'none' }}
-      >
-        <input type="hidden" name="_subject" value="Response from Sakhi" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value={window.location.href} />
-        <input type="text" name="message" />
-      </form>
-      
       <img 
         src={currentStep.image} 
         alt="Profile" 
